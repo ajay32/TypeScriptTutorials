@@ -3,6 +3,8 @@ import React, { useReducer, useRef, useState } from 'react'
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../App';
 import { TextInput } from 'react-native-gesture-handler';
+import { StyleProvider } from '../Stylecontext';
+import Comp from '../Comp';
 
 
 interface HomeScreenProps {
@@ -66,8 +68,11 @@ const Home = ({navigation} : HomeScreenProps) => {
 
     const ref = useRef<TextInput>(null);
 
-
+// I have a child component name Comp where I want to use the context
+// but you have to wrap the parent compnent as well 
+// so wrapping view in return with Provider
   return (
+    <StyleProvider>
     <View>
       <Text style={{padding: 20, borderWidth: 1, color: 'black'}}
       onPress={()=> {
@@ -80,7 +85,10 @@ const Home = ({navigation} : HomeScreenProps) => {
       <Text style={{fontSize:30, color : 'green'}}>Count: {state.count}</Text>
       <Button title="+" onPress={() => dispatch({ type: 'increment' })} />
       <Button title="-" onPress={() => dispatch({ type: 'decrement' })} />
+      <Comp />
       </View>
+    </StyleProvider>
+
   )
 }
 
