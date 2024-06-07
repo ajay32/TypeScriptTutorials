@@ -8,7 +8,6 @@ interface MyProps {
 }
 
 
-//const FunctionalComp:FunctionComponent<MyProps> = ({name, email, age}: MyProps) : ReactElement => {
     const FunctionalComp = ({name, email, age}: MyProps) => {
   return (
     <View>
@@ -18,3 +17,5 @@ interface MyProps {
 }
 
 export default FunctionalComp
+
+//const FunctionalComp:FunctionComponent<MyProps> = ({name, email, age}: MyProps) : ReactElement => {
