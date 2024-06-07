@@ -5,6 +5,7 @@ import { RootStackParamList } from '../App';
 import { TextInput } from 'react-native-gesture-handler';
 import { StyleProvider } from '../Stylecontext';
 import Comp from '../Comp';
+import Products from '../ApiAndFlatlist/Products';
 
 
 interface HomeScreenProps {
@@ -86,6 +87,9 @@ const Home = ({navigation} : HomeScreenProps) => {
       <Button title="+" onPress={() => dispatch({ type: 'increment' })} />
       <Button title="-" onPress={() => dispatch({ type: 'decrement' })} />
       <Comp />
+
+      <Products />
+
       </View>
     </StyleProvider>
 
