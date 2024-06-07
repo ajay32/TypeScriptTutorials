@@ -1,5 +1,5 @@
-import { View, Text } from 'react-native'
-import React, { useRef, useState } from 'react'
+import { View, Text, Button } from 'react-native'
+import React, { useReducer, useRef, useState } from 'react'
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../App';
 import { TextInput } from 'react-native-gesture-handler';
@@ -19,17 +19,50 @@ interface Item {
     height: number
 }
 
+
+//========================= reducer logic
+
+// three thigns we requrie
+// StateType - MyState
+// initialState ( it will also be of MyState)
+//  actionType - 
+
+// for state (it will be object type)
+type MyState = {
+  count : number
+}
+
+type MyAction = 
+   {type : 'increment'} | {type: 'decrement'}
+
+
+const initialState : MyState = { count: 0 };
+
+function reducer(state: MyState, action : MyAction) {
+  switch (action.type) {
+    case 'increment':
+      return { ...state, count: state.count + 1 };
+    case 'decrement':
+      return { ...state, count: state.count - 1 };
+    default:
+      throw new Error();
+  }
+}
+
+
 const Home = ({navigation} : HomeScreenProps) => {
 
-    const [counter, setCounter] = useState<number>(0);
-    const [name, setName] = useState<string>('');
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [user, setUser] = useState<User>( {
-        name: '',
-        email: ''
-    });
-    const [item, setItem] = useState<Item[]>([]);
-    const [detail, setDetail] = useState<null>(null);
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+    // const [counter, setCounter] = useState<number>(0);
+    // const [name, setName] = useState<string>('');
+    // const [isLoading, setIsLoading] = useState<boolean>(false);
+    // const [user, setUser] = useState<User>( {
+    //     name: '',
+    //     email: ''
+    // });
+    // const [item, setItem] = useState<Item[]>([]);
+    // const [detail, setDetail] = useState<null>(null);
 
     const ref = useRef<TextInput>(null);
 
@@ -44,10 +77,48 @@ const Home = ({navigation} : HomeScreenProps) => {
         });
       }}>I am home</Text>
       <TextInput ref={ref}> Hey</TextInput>
+      <Text style={{fontSize:30, color : 'green'}}>Count: {state.count}</Text>
+      <Button title="+" onPress={() => dispatch({ type: 'increment' })} />
+      <Button title="-" onPress={() => dispatch({ type: 'decrement' })} />
       </View>
   )
 }
 
 export default Home;
+
+//============reducer logic will still work without giving the type
+// below is javascript version
+// it will for complex state management when state does not handle cleanly
+// complex logic handle inside the component ..see above like multipe cases state logic
+
+// import React, { useReducer } from 'react';
+// import { View, Text, Button } from 'react-native';
+
+// const initialState = { count: 0 };
+
+// function reducer(state, action) {
+//   switch (action.type) {
+//     case 'increment':
+//       return { count: state.count + 1 };
+//     case 'decrement':
+//       return { count: state.count - 1 };
+//     default:
+//       throw new Error();
+//   }
+// }
+
+// function Counter() {
+//   const [state, dispatch] = useReducer(reducer, initialState);
+
+//   return (
+//     <View>
+//       <Text>Count: {state.count}</Text>
+//       <Button title="+" onPress={() => dispatch({ type: 'increment' })} />
+//       <Button title="-" onPress={() => dispatch({ type: 'decrement' })} />
+//     </View>
+//   );
+// }
+
+
 
 
